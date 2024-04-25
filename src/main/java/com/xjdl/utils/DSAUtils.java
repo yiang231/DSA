@@ -1,9 +1,16 @@
 package com.xjdl.utils;
 
+import com.xjdl.struct.ListNode;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class DSAUtils {
+	public static final String LEFT_SQUARE_BRACKET = "[";
+	public static final String RIGHT_SQUARE_BRACKET = "]";
+	public static final String COMMA = ", ";
 
 	/**
 	 * 获得斐波那契数列
@@ -86,5 +93,82 @@ public class DSAUtils {
 		}
 		// 返回生成的增量序列
 		return sequence;
+	}
+
+	public static void printArray(int[] nums) {
+		printArray(nums, 0, nums.length - 1, false);
+	}
+
+	public static void printArray(int[] nums, int l, int r) {
+		printArray(nums, l, r, false);
+	}
+
+	public static void printArray(int[] nums, int l, int r, boolean index) {
+		if (log.isDebugEnabled()) {
+			StringBuilder sb = new StringBuilder(LEFT_SQUARE_BRACKET);
+			for (int i = l; i <= r; i++) {
+				sb.append(nums[i]);
+				if (index) {
+					sb.append(LEFT_SQUARE_BRACKET).append(i).append(RIGHT_SQUARE_BRACKET);
+				}
+				if (i != r) {
+					sb.append(COMMA);
+				}
+			}
+			sb.append(RIGHT_SQUARE_BRACKET);
+			log.debug("{}", sb);
+		}
+	}
+
+	public static void print2DArrayByIterative(int[][] target) {
+		if (log.isDebugEnabled()) {
+			for (int[] row : target) {
+				log.debug("{}", row);
+			}
+		}
+	}
+
+	public static void print2DArray(int[][] target) {
+		print2DArray(target, true);
+	}
+
+	public static void print2DArray(int[][] target, boolean index) {
+		if (log.isDebugEnabled()) {
+			StringBuilder sb = new StringBuilder();
+			for (int x = 0; x < target.length; x++) {
+				sb.append(LEFT_SQUARE_BRACKET);
+				for (int y = 0; y < target[x].length; y++) {
+					sb.append(target[x][y]);
+					if (index) {
+						sb.append(LEFT_SQUARE_BRACKET).append(x).append("][")
+								.append(y).append(RIGHT_SQUARE_BRACKET);
+					}
+					if (y < target[x].length - 1) {
+						sb.append(COMMA);
+					}
+				}
+				sb.append(RIGHT_SQUARE_BRACKET);
+				log.debug("{}", sb);
+				sb.setLength(0);
+			}
+		}
+	}
+
+	public static ListNode<Integer> arrayForListNode(int[] arr) {
+		ListNode<Integer> listNode = null;
+		for (int i = arr.length - 1; i >= 0; i--) {
+			listNode = new ListNode<>(arr[i], listNode);
+		}
+		return listNode;
+	}
+
+	public static <E> ListNode<E> getLastListNode(ListNode<E> listNode) {
+		if (listNode == null) {
+			return null;
+		}
+		while (listNode.next != null) {
+			listNode = listNode.next;
+		}
+		return listNode;
 	}
 }
